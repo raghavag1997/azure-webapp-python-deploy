@@ -12,4 +12,4 @@ steps:
     addToPath: true
     architecture: 'x64'
 - script: |
-    echo $(projectRoot)
+    echo  $(System.DefaultWorkingDirectory)

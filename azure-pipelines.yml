@@ -11,5 +11,9 @@ steps:
     versionSpec: '3.7'
     addToPath: true
     architecture: 'x64'
+  displayName: 'Python Version Specification'
+
 - script: |
     echo  $(System.DefaultWorkingDirectory)
+    ls
+  displayName: 'Installing the Required Python Packages'

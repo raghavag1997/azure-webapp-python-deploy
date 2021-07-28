@@ -14,6 +14,12 @@ steps:
   displayName: 'Python Version Specification'
 
 - script: |
+     python -m venv antenv
+     source antenv/bin/activate
+     python -m pip install --upgrade pip
+     pip install setup
+     pip install -r requirements.txt
+     pip list
     echo  $(System.DefaultWorkingDirectory)
     ls
   displayName: 'Installing the Required Python Packages'

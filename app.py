@@ -1,20 +1,15 @@
 from flask import Flask,render_template, request
-import pyodbc 
-
-server = 'tcp:vnetpoc321.database.windows.net' 
-database = 'mydb'
-username = 'admin321' 
-password = 'Ragh@db31'
-driver = '{ODBC Driver 17 for SQL Server}'
-
-
-cnxn = pyodbc.connect('DRIVER=' + driver + 
-                      ';SERVER=' + server + 
-                      ';DATABASE=' + database + 
-                      ';UID=' + username + 
-                      ';PWD=' + password)
+from flask_mysqldb import MySQL
 
 app = Flask(__name__)
+
+#Here I used Private IP To test the things 
+app.config['MYSQL_HOST'] = '10.0.1.4'
+app.config['MYSQL_USER'] = 'admin'
+app.config['MYSQL_PASSWORD'] = 'admin'
+app.config['MYSQL_DB'] = 'mydb'
+ 
+mysql = MySQL(app)
 
 @app.route("/")
 def index():
@@ -22,10 +17,10 @@ def index():
 
 @app.route("/getdata")
 def getdata():
-    cursor = cnxn.cursor()
-    print('Connection established') 
-    cursor.execute("select * from MyUsers;")
-    data=cursor.fetchall()
+    #Creating a connection cursor
+    cursor = mysql.connection.cursor()
+    cursor.execute("select * from mydb.MyUsers;")
+    data = cursor.fetchall()
     print(data)
     return str(data)
 
@@ -34,4 +29,4 @@ if __name__ == '__main__':
   
     # run() method of Flask class runs the application 
     # on the local development server.
-    app.run(host='0.0.0.0',port=5000)
+    app.run()
